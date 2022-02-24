@@ -9,6 +9,7 @@
     "src/**/*"
   ],
   "scripts": {
+    "release": "np --any-branch --no-cleanup --no-tests --no-yarn",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "gts lint",
     "clean": "gts clean",
@@ -30,8 +31,9 @@
   },
   "homepage": "https://gitlab.com/shardus/shardus-types#readme",
   "devDependencies": {
+    "@types/node": "^16.11.0",
     "gts": "^3.1.0",
-    "typescript": "^4.4.4",
-    "@types/node": "^16.11.0"
+    "np": "^7.6.0",
+    "typescript": "^4.4.4"
   }
 }
