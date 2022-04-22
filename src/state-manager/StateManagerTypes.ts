@@ -6,7 +6,7 @@ export type ReceiptMapResult = {
   receiptMap: ReceiptMap;
   txCount: number;
   txsMap: {[id:string]:any[]};  //need to make this {[id:string]:WrappedResponse[]}; somehow 
-  txsMapEVMReceipt: {[id:string]:unknown[]};
+  txsMapEVMReceipt: {[id:string]:unknown};
 };
 
 export type OpaqueBlob = any; //Shardus is not supposed to know about the details of this, it is up to the dapp to define
