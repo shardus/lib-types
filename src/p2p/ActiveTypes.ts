@@ -18,4 +18,5 @@ export interface Record {
   active: number
   activated: string[]
   activatedPublicKeys: string[]
+  maxSyncTime: number
 }
