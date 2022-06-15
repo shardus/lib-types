@@ -38,5 +38,6 @@ export interface Txs {
 
 export interface Record {
   lost: string[]
+  lostSyncing: string[]
   refuted: string[]
 }
