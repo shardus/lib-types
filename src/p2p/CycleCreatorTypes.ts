@@ -24,6 +24,7 @@ export interface BaseRecord {
   previous: string
   start: number
   duration: number
+  networkConfigHash: string
 }
 // don't forget to add new modules here
 
