@@ -14,6 +14,7 @@ export interface SignedObject extends LooseObject {
 export enum NodeStatus {
   ACTIVE = 'active',
   SYNCING = 'syncing',
+  STANDBY = 'standby',
 }
 
 export interface P2PNode {
