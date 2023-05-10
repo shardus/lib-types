@@ -1,4 +1,4 @@
-import {ReceiptMapResult, SummaryBlob} from './StateManagerTypes';
+import {ReceiptMap, SummaryBlob} from './StateManagerTypes';
 
 export type CycleMarker = string;
 
@@ -12,7 +12,7 @@ export type Receipt = {
   parentCycle?: CycleMarker;
   networkHash?: string;
   partitionHashes?: string[];
-  partitionMaps?: {[partition: number]: ReceiptMapResult};
+  partitionMaps?: {[partition: number]: ReceiptMap};
   partitionTxs?: {[partition: number]: any};
 };
 
