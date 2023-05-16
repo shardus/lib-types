@@ -12,11 +12,10 @@ export interface SignedObject extends LooseObject {
 }
 
 export enum NodeStatus {
-  ACTIVE = 'active',
+  INITIALIZING = 'initializing',
+  STANDBY = 'standby',
   SYNCING = 'syncing',
-  STANDBY = 'standby', // The standby status is not fully worked in yet.  It is still possilbe for node status to be null.
-  // Stanby will only be possible as a result if reportStandby is set to true in getNodeStatus or getPublicNodeInfo
-  // this is currently the case only in the nodeinfo endpoint when the reportStandby parameter is set to true.
+  ACTIVE = 'active',
 }
 
 export interface P2PNode {
