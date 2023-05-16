@@ -9,9 +9,10 @@ export interface Signature {
 export type SignedObject<T = LooseObject> = T & { sign: Signature }
 
 export enum NodeStatus {
-  ACTIVE = 'active',
-  SYNCING = 'syncing',
+  INITIALIZING = 'initializing',
   STANDBY = 'standby',
+  SYNCING = 'syncing',
+  ACTIVE = 'active',
 }
 
 export interface P2PNode {
