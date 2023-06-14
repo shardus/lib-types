@@ -1,15 +1,12 @@
-export interface LooseObject {
-  [index: string]: unknown
-}
+export type LooseObject = Record<string, unknown>
 
 export interface Signature {
   owner: string
   sig: string
 }
 
-export interface SignedObject extends LooseObject {
-  sign: Signature
-}
+/** A `T` signed with a signature `sign`. */
+export type SignedObject<T = LooseObject> = T & { sign: Signature }
 
 export enum NodeStatus {
   ACTIVE = 'active',
