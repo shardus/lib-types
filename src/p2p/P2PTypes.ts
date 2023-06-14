@@ -7,9 +7,7 @@ export interface Signature {
   sig: string
 }
 
-export interface SignedObject extends LooseObject {
-  sign: Signature
-}
+export type SignedObject<T = LooseObject> = T & { sign: Signature }
 
 export enum NodeStatus {
   ACTIVE = 'active',
