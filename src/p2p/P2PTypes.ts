@@ -1,6 +1,4 @@
-export interface LooseObject {
-  [index: string]: unknown
-}
+export type LooseObject = Record<string, unknown>
 
 export interface Signature {
   owner: string
