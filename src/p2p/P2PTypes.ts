@@ -5,6 +5,7 @@ export interface Signature {
   sig: string
 }
 
+/** A `T` signed with a signature `sign`. */
 export type SignedObject<T = LooseObject> = T & { sign: Signature }
 
 export enum NodeStatus {
