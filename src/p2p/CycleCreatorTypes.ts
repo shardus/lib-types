@@ -1,3 +1,4 @@
+import { hexstring } from '..'
 import * as Active from './ActiveTypes'
 import * as Apoptosis from './ApoptosisTypes'
 import * as Archivers from './ArchiversTypes'
@@ -54,7 +55,10 @@ export type CycleRecord = BaseRecord &
     refuted: string[]
     apoptosized: string[]
   } & Snapshot.Record &
-  CycleAutoScale.Record
+  CycleAutoScale.Record & {
+    nodeListHash: hexstring
+    archiverListHash: hexstring
+  }
 
 export type CycleData = CycleRecord & {
   marker: CycleMarker
