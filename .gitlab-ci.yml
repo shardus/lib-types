@@ -1,36 +1,50 @@
-image: 'registry.gitlab.com/shardus/dev-container:latest_node18'
-
-before_script:
-  - node -v
-
-stages:
-  - build
-
+# Define cache settings
 cache:
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
 
+# Define default image for all jobs
+image: 'registry.gitlab.com/shardus/dev-container:latest_node18'
+
+# Common configuration for jobs
+.common-job-template: &common-job-template
+  before_script:
+    - node -v
+
+stages:
+    - prepare
+    - build_and_lint
+
+# Prepare job: Install Node.js dependencies
+prepare-job:
+  <<: *common-job-template
+  stage: prepare
+  script:
+    - apt-get update
+    - npm ci  # Clean install of project dependencies
+
 # Build Job: Compiles the code
 build-job:
-  stage: build
-  script:
-    - echo "Compiling the code..."
-    - npm ci # Clean install of project dependencies
-    - npm run compile
-    - echo "Compile complete."
+    <<: *common-job-template
+    stage: build_and_lint
+    script:
+        - echo "Compiling the code..."
+        - npm run compile
+        - echo "Compile complete."
 
 # Lint Job: Runs ESLint for code linting
 lint-job:
-  stage: build
-  script:
-    - echo "Running ESLint..."
-    - npm run lint
-    - echo "Running ESLint complete."
+    <<: *common-job-template
+    stage: build_and_lint
+    script:
+        - echo "Running ESLint..."
+        - npm run lint
+        - echo "Running ESLint complete."
 
-# Format Checker Job: Runs a code formatter
-# format-checker-job:
-#   stage: build
-#   script:
-#     - echo "Running code formatter..."
-#     - npm run format-check
-#     - echo "Code formatting complete."
+# format-job:
+#     stage: build_and_lint_and_format
+#     script:
+#         - echo "Running Prettier..."
+#         - npm run format-check
+#         - echo "Running Prettier complete."
