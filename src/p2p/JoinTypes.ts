@@ -1,3 +1,4 @@
+import { hexstring } from '..'
 import * as CycleCreator from './CycleCreatorTypes'
 import * as Types from './P2PTypes'
 
@@ -26,7 +27,16 @@ export interface Txs {
   join: JoinRequest[]
 }
 
+export interface StandbyAdditionInfo {
+  publicKey: hexstring
+  ip: string
+  port: number
+}
+
 export interface Record {
   syncing: number
   joinedConsensors: JoinedConsensor[]
+
+  /** New nodes that others will add to their standby node lists once received. Optional for now until Join Protocol v2 is stabilized. */
+  standbyAdd?: StandbyAdditionInfo[]
 }
