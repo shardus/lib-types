@@ -58,6 +58,7 @@ export type CycleRecord = BaseRecord &
   CycleAutoScale.Record & {
     nodeListHash: hexstring
     archiverListHash: hexstring
+    standbyNodeListHash: hexstring
   }
 
 export type CycleData = CycleRecord & {
