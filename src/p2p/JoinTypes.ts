@@ -31,6 +31,7 @@ export interface StandbyAdditionInfo {
   publicKey: hexstring
   ip: string
   port: number
+  selectionNum: string
 }
 
 export interface Record {
