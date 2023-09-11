@@ -10,6 +10,7 @@ import * as Refresh from './RefreshTypes'
 import * as Rotation from './RotationTypes'
 import * as SafetyMode from './SafetyModeTypes'
 import * as Snapshot from './SnapshotTypes'
+import * as Modes from './ModesTypes'
 
 /** TYPES */
 
@@ -29,7 +30,9 @@ export interface BaseRecord {
 }
 // don't forget to add new modules here
 
-export type CycleTxs = SafetyMode.Txs &
+export type CycleTxs = 
+  Modes.Txs &
+  SafetyMode.Txs &
   Refresh.Txs &
   Archivers.Txs &
   Join.Txs &
@@ -41,6 +44,7 @@ export type CycleTxs = SafetyMode.Txs &
 // don't forget to add new modules here
 
 export type CycleRecord = BaseRecord &
+  Modes.Record &
   SafetyMode.Record &
   Refresh.Record &
   Archivers.Record &

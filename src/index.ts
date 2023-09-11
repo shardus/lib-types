@@ -19,6 +19,7 @@ import * as TemplateTypes_ from './p2p/TemplateTypes'
 import * as shardFunctionTypes_ from './state-manager/shardFunctionTypes'
 import * as StateManagerTypes_ from './state-manager/StateManagerTypes'
 import * as StateMetaDataTypes_ from './state-manager/StateMetaDataTypes'
+import * as ModesTypes_ from './p2p/ModesTypes'
 
 export type hexstring = string;
 export type publicKey = hexstring;
@@ -46,6 +47,7 @@ export namespace P2P {
   export import SnapshotTypes = SnapshotTypes_
   export import SyncTypes = SyncTypes_
   export import TemplateTypes = TemplateTypes_
+  export import ModesTypes = ModesTypes_
 }
 
 export namespace StateManager {
