@@ -14,11 +14,14 @@ export interface JoinedConsensor extends Types.P2PNode {
   id: string
 }
 
-export interface JoinRequest {
+export interface StandbyInfo {
   nodeInfo: Types.P2PNode
+  selectionNum: string
+}
+
+export interface JoinRequest extends StandbyInfo {
   cycleMarker: CycleCreator.CycleMarker
   proofOfWork: string
-  selectionNum: string
   version: string
   sign: Types.Signature
 }
@@ -27,17 +30,10 @@ export interface Txs {
   join: JoinRequest[]
 }
 
-export interface StandbyAdditionInfo {
-  publicKey: hexstring
-  ip: string
-  port: number
-  selectionNum: string
-}
-
 export interface Record {
   syncing: number
   joinedConsensors: JoinedConsensor[]
 
   /** New nodes that others will add to their standby node lists once received. Optional for now until Join Protocol v2 is stabilized. */
-  standbyAdd?: StandbyAdditionInfo[]
+  standbyAdd?: StandbyInfo[]
 }
