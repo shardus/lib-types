@@ -8,6 +8,7 @@ export enum ScaleType {
 
 export interface Record {
   desired: number
+  target: number
 }
 export interface ScaleRequest {
   nodeId: string
