@@ -36,4 +36,7 @@ export interface Record {
 
   /** New nodes that others will add to their standby node lists once received. Optional for now until Join Protocol v2 is stabilized. */
   standbyAdd?: StandbyInfo[]
+
+  /** Public keys of nodes that others will remove from their standby node lists once received. Optional for now until Join Protocol v2 is stabilized. */
+  standbyRemove?: hexstring[]
 }
