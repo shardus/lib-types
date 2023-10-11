@@ -24,6 +24,7 @@ export interface P2PNode {
   address: string
   joinRequestTimestamp: number
   activeTimestamp: number
+  syncingTimestamp: number
 }
 
 export interface Node {
