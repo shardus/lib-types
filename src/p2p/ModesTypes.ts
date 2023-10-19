@@ -6,5 +6,5 @@ export interface Txs {
 }
 
 export interface Record {
-  mode: 'forming' | 'processing' | 'safety' | 'recovery'
+  mode: 'forming' | 'processing' | 'safety' | 'recovery' | 'shutdown'
 }
