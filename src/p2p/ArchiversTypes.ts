@@ -52,4 +52,5 @@ export interface Txs {
 export interface Record {
   joinedArchivers: JoinedArchiver[]
   leavingArchivers: JoinedArchiver[]
+  archiversAtShutdown: JoinedArchiver[]
 }
