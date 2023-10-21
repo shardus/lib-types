@@ -54,3 +54,5 @@ export interface Record {
   leavingArchivers: JoinedArchiver[]
   archiversAtShutdown: JoinedArchiver[]
 }
+
+export type RestartCycleRecord = Cycle
