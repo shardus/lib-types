@@ -21,6 +21,7 @@ export interface JoinRequest {
   proofOfWork: string
   version: string
   sign: Types.Signature
+  appJoinData?: any //Required for golden ticket feature
 }
 
 export interface Txs {
