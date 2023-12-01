@@ -43,6 +43,7 @@ export interface JoinedArchiver {
 
 export interface Request extends SignedObject {
   nodeInfo: JoinedArchiver
+  appData: unknown
   requestType: string
 }
 export interface Txs {
