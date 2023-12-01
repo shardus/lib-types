@@ -11,6 +11,7 @@ import * as Rotation from './RotationTypes'
 import * as SafetyMode from './SafetyModeTypes'
 import * as Snapshot from './SnapshotTypes'
 import * as Modes from './ModesTypes'
+import * as LostArchivers from './LostArchiverTypes'
 
 /** TYPES */
 
@@ -30,7 +31,7 @@ export interface BaseRecord {
 }
 // don't forget to add new modules here
 
-export type CycleTxs = 
+export type CycleTxs =
   Modes.Txs &
   SafetyMode.Txs &
   Refresh.Txs &
@@ -40,7 +41,8 @@ export type CycleTxs =
   Apoptosis.Txs &
   Lost.Txs &
   Rotation.Txs &
-  CycleAutoScale.Txs
+  CycleAutoScale.Txs &
+  LostArchivers.Txs
 // don't forget to add new modules here
 
 export type CycleRecord = BaseRecord &
@@ -63,7 +65,8 @@ export type CycleRecord = BaseRecord &
     nodeListHash: hexstring
     archiverListHash: hexstring
     standbyNodeListHash: hexstring
-  }
+  } &
+  LostArchivers.Record
 
 export type CycleData = CycleRecord & {
   marker: CycleMarker
