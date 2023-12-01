@@ -13,13 +13,14 @@ export interface InvestigateArchiverMsg {
 
 export interface ArchiverDownMsg {
   type: 'down';
-  investigateTx: InvestigateArchiverMsg;
+  investigateMsg: InvestigateArchiverMsg;
   cycle: CycleMarker;
 }
 
 export interface ArchiverUpMsg {
   type: 'up';
-  downTx: ArchiverDownMsg;
+  downMsg: ArchiverDownMsg;
+  refuteMsg: ArchiverRefutesLostMsg;
   cycle: CycleMarker;
 }
 
