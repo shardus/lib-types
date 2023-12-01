@@ -27,7 +27,7 @@ export interface LostRecord {
   status: string; // reported, checking, down, up
 
   //  message?: SignedLostReport & SignedDownGossipMessage & SignedUpGossipMessage
-  message?: unknown;
+  message?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   gossiped?: boolean;
 }
 
