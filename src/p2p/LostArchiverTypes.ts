@@ -3,7 +3,7 @@ import {publicKey} from '..';
 import {CycleMarker} from './CycleCreatorTypes';
 import {SignedObject} from './P2PTypes';
 
-export interface InvestigateArchiverTx {
+export interface InvestigateArchiverMsg {
   type: 'investigate';
   target: publicKey;
   investigator: publicKey;
@@ -11,25 +11,21 @@ export interface InvestigateArchiverTx {
   cycle: CycleMarker;
 }
 
-export interface ArchiverDownTx {
+export interface ArchiverDownMsg {
   type: 'down';
-  investigateTx: InvestigateArchiverTx;
+  investigateTx: InvestigateArchiverMsg;
   cycle: CycleMarker;
 }
 
-export interface ArchiverUpTx {
+export interface ArchiverUpMsg {
   type: 'up';
-  downTx: ArchiverDownTx;
+  downTx: ArchiverDownMsg;
   cycle: CycleMarker;
 }
-
-export type SignedInvestigateArchiverTx = InvestigateArchiverTx & SignedObject;
-export type SignedArchiverDownTx = ArchiverDownTx & SignedObject;
-export type SignedArchiverUpTx = ArchiverUpTx & SignedObject;
 
 export interface Txs {
-  lostArchivers: SignedArchiverDownTx[];
-  refutedArchivers: SignedArchiverUpTx[];
+  lostArchivers: SignedObject<ArchiverDownMsg>[];
+  refutedArchivers: SignedObject<ArchiverUpMsg>[];
 }
 
 export interface Record {
