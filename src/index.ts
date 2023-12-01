@@ -8,6 +8,7 @@ import * as CycleParserTypes_ from './p2p/CycleParserTypes'
 import * as GlobalAccountsTypes_ from './p2p/GlobalAccountsTypes'
 import * as JoinTypes_ from './p2p/JoinTypes'
 import * as LostTypes_ from './p2p/LostTypes'
+import * as LostArchiverTypes_ from './p2p/LostArchiverTypes'
 import * as NodeListTypes_ from './p2p/NodeListTypes'
 import * as P2PTypes_ from './p2p/P2PTypes'
 import * as RefreshTypes_ from './p2p/RefreshTypes'
@@ -39,6 +40,7 @@ export namespace P2P {
   export import GlobalAccountsTypes = GlobalAccountsTypes_
   export import JoinTypes = JoinTypes_
   export import LostTypes = LostTypes_
+  export import LostArchiverTypes = LostArchiverTypes_
   export import NodeListTypes = NodeListTypes_
   export import P2PTypes = P2PTypes_
   export import RefreshTypes = RefreshTypes_
