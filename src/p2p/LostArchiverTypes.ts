@@ -23,6 +23,11 @@ export interface ArchiverUpMsg {
   cycle: CycleMarker;
 }
 
+export interface ArchiverRefutesLostMsg {
+  archiver: publicKey;
+  cycle: CycleMarker;
+}
+
 export interface Txs {
   lostArchivers: SignedObject<ArchiverDownMsg>[];
   refutedArchivers: SignedObject<ArchiverUpMsg>[];
