@@ -13,6 +13,7 @@ import {
 
 export enum RequestTypes {
   JOIN = 'JOIN',
+  ACTIVE = 'ACTIVE',
   LEAVE = 'LEAVE',
 }
 
@@ -45,6 +46,7 @@ export interface Request extends SignedObject {
   nodeInfo: JoinedArchiver
   appData: unknown
   requestType: string
+  requestTimestamp: number
 }
 export interface Txs {
   archivers: Request[]
