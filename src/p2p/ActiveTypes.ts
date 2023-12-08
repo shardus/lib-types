@@ -1,22 +1,23 @@
-import * as Types from './P2PTypes'
+import * as Types from './P2PTypes';
 
 /** TYPES */
 
 export interface ActiveRequest {
-  nodeId: string
-  status: string
-  timestamp: number
+  nodeId: string;
+  status: string;
+  timestamp: number;
 }
 
-export type SignedActiveRequest = ActiveRequest & Types.SignedObject
+export type SignedActiveRequest = ActiveRequest & Types.SignedObject;
 
 export interface Txs {
-  active: SignedActiveRequest[]
+  active: SignedActiveRequest[];
 }
 
 export interface Record {
-  active: number
-  activated: string[]
-  activatedPublicKeys: string[]
-  maxSyncTime: number
+  active: number;
+  standby: number;
+  activated: string[];
+  activatedPublicKeys: string[];
+  maxSyncTime: number;
 }
