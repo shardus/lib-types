@@ -59,6 +59,7 @@ export type CycleRecord = BaseRecord &
     returned: string[]
     lost: string[]
     refuted: string[]
+    appRemoved: string[]
     apoptosized: string[]
   } & Snapshot.Record &
   CycleAutoScale.Record & {
