@@ -37,6 +37,8 @@ export interface LostRecord {
   target: string;
   cycle: number;
   status: string; // reported, checking, down, up
+  checker: string
+  reporter: string
 
   //  message?: SignedLostReport & SignedDownGossipMessage & SignedUpGossipMessage
   message?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
