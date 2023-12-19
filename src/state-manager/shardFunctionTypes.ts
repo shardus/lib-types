@@ -271,4 +271,42 @@ interface BasicAddressRange {
   high: string
 }
 
-export { ShardGlobals, ShardInfo, WrappableParitionRange as WrappableParitionRange, NodeShardData, AddressRange, HomeNodeSummary, ParititionShardDataMap, NodeShardDataMap, MergeResults, BasicAddressRange }
+type CycleShardData = {
+  shardGlobals: ShardGlobals 
+  cycleNumber: number
+  ourNode: Node
+  /**
+   * our node's node shard data
+   */
+  nodeShardData: NodeShardData
+  nodeShardDataMap: Map<string, NodeShardData>
+  parititionShardDataMap: Map<number, ShardInfo>
+  nodes: Node[]
+  syncingNeighbors: Node[]
+  syncingNeighborsTxGroup: Node[]
+  hasSyncingNeighbors: boolean
+
+  partitionsToSkip: Map<number, boolean>
+
+  timestamp: number // timestamp for cleanup purposes, may not match exactly the rules of which transactions will live in a partition for this cycle.
+  timestampEndCycle: number
+
+  hasCompleteData: boolean
+
+  /**
+   * hashlist index of the voters for this vote
+   */
+  voters: number[]
+  /**
+   * list of partitions that we do consensus on
+   */
+  ourConsensusPartitions?: number[]
+  /**
+   * list of stored parititions
+   */
+  ourStoredPartitions?: number[]
+
+  calculationTime: number
+}
+
+export { ShardGlobals, ShardInfo, WrappableParitionRange as WrappableParitionRange, NodeShardData, AddressRange, HomeNodeSummary, ParititionShardDataMap, NodeShardDataMap, MergeResults, BasicAddressRange, CycleShardData }
