@@ -18,13 +18,12 @@ interface UpGossipMessage {
   status: string;
   cycle: number;
 }
-interface RemoveByAppMessage {
+export type RemoveByAppMessage = {
   target: string
   certificate: RemoveCertificate
 }
 export type RemoveCertificate = {
   nodePublicKey: string;
-  certExp: number;
   cycle: number;
   signs?: Signature[];
   sign?: Signature;
@@ -32,7 +31,6 @@ export type RemoveCertificate = {
 export type SignedLostReport = LostReport & SignedObject;
 export type SignedDownGossipMessage = DownGossipMessage & SignedObject;
 export type SignedUpGossipMessage = UpGossipMessage & SignedObject;
-export type SignedRemoveByAppMessage = RemoveByAppMessage & SignedObject;
 export interface LostRecord {
   target: string;
   cycle: number;
@@ -45,16 +43,10 @@ export interface LostRecord {
   gossiped?: boolean;
 }
 
-export interface RemoveByAppRecord {
-  target: string;
-  certificate: RemoveCertificate;
-  gossiped?: boolean;
-}
-
 export interface Txs {
   lost: SignedDownGossipMessage[];
   refuted: SignedUpGossipMessage[];
-  removedByApp: SignedRemoveByAppMessage[];
+  removedByApp: RemoveByAppMessage[];
 }
 
 export interface Record {
