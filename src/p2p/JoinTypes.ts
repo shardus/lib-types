@@ -36,9 +36,16 @@ export interface FinishedSyncingRequest {
   sign?: Types.Signature //sig of synced node
 }
 
+export interface KeepInStandby {
+  publicKey: string //pub key of the standby node
+  cycleNumber: number //a recent cycle 
+  sign: Types.Signature //sig of standby node 
+}
+
 export interface Txs {
   join: JoinRequest[]
   synced?: FinishedSyncingRequest[]
+  keepInStandby: KeepInStandby[]
 }
 
 export interface Record {
@@ -57,4 +64,6 @@ export interface Record {
 
   /** Public keys of nodes that others will add to their ready nodes lists once received. */
   finishedSyncing?: hexstring[]
+  /** Public keys of standby nodes that have refreshed their keep alive timer.  where do we put the keep aliver timer? */
+  standbyRefresh?: hexstring[]
 }
