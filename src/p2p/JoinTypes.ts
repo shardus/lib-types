@@ -24,6 +24,12 @@ export interface JoinRequest {
   appJoinData?: any //Required for golden ticket feature
 }
 
+export interface SyncStarted {
+  nodeId: string //pub key of the standby node
+  cycleNumber: number //a recent cycle 
+  sign?: Types.Signature //sig of standby node 
+}
+
 export interface Txs {
   join: JoinRequest[]
 }
@@ -37,4 +43,8 @@ export interface Record {
 
   /** Public keys of nodes that others will remove from their standby node lists once received. Optional for now until Join Protocol v2 is stabilized. */
   standbyRemove?: hexstring[]
+
+  startedSyncing?: hexstring[]
+
+  lostAfterSelection?: hexstring[]
 }
