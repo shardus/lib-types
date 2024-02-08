@@ -11,6 +11,7 @@ export type SignedObject<T = LooseObject> = T & { sign: Signature }
 export enum NodeStatus {
   INITIALIZING = 'initializing',
   STANDBY = 'standby',
+  SELECTED = 'selected',
   SYNCING = 'syncing',
   ACTIVE = 'active',
 }
