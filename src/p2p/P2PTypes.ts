@@ -13,6 +13,7 @@ export enum NodeStatus {
   STANDBY = 'standby',
   SELECTED = 'selected',
   SYNCING = 'syncing',
+  READY = 'ready',
   ACTIVE = 'active',
 }
 
@@ -26,6 +27,7 @@ export interface P2PNode {
   joinRequestTimestamp: number
   activeTimestamp: number
   syncingTimestamp: number
+  readyTimestamp: number
 }
 
 export interface Node {

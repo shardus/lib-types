@@ -30,8 +30,15 @@ export interface SyncStarted {
   sign?: Types.Signature //sig of standby node 
 }
 
+export interface FinishedSyncingRequest {
+  nodeId: string //id of the synced node
+  cycleNumber: number //a recent cycle
+  sign?: Types.Signature //sig of synced node
+}
+
 export interface Txs {
   join: JoinRequest[]
+  synced?: FinishedSyncingRequest[]
 }
 
 export interface Record {
@@ -47,4 +54,7 @@ export interface Record {
   startedSyncing?: hexstring[]
 
   lostAfterSelection?: hexstring[]
+
+  /** Public keys of nodes that others will add to their ready nodes lists once received. */
+  finishedSyncing?: hexstring[]
 }
