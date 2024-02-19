@@ -38,14 +38,12 @@ export interface FinishedSyncingRequest {
 
 export interface KeepInStandby {
   publicKey: string //pub key of the standby node
-  cycleNumber: number //a recent cycle 
-  sign: Types.Signature //sig of standby node 
+  cycleNumber: number //a recent cycle
+  sign?: Types.Signature //sig of standby node 
 }
 
 export interface Txs {
   join: JoinRequest[]
-  synced?: FinishedSyncingRequest[]
-  keepInStandby: KeepInStandby[]
 }
 
 export interface Record {

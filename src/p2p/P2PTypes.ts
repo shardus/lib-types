@@ -28,6 +28,7 @@ export interface P2PNode {
   activeTimestamp: number
   syncingTimestamp: number
   readyTimestamp: number
+  refreshedCounter?: number
 }
 
 export interface Node {
