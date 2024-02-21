@@ -8,9 +8,9 @@ import * as Types from './P2PTypes'
  */
 /** TYPES */
 
-export interface JoinedConsensor extends Types.P2PNode {
+export interface SelectedConsensor extends Types.P2PNode {
   cycleJoined: CycleCreator.CycleMarker
-  counterRefreshed: CycleCreator.CycleRecord['counter']
+  counterSelected: CycleCreator.CycleRecord['counter']
   id: string
 }
 
@@ -26,8 +26,8 @@ export interface JoinRequest {
 
 export interface SyncStarted {
   nodeId: string //pub key of the standby node
-  cycleNumber: number //a recent cycle 
-  sign?: Types.Signature //sig of standby node 
+  cycleNumber: number //a recent cycle
+  sign?: Types.Signature //sig of standby node
 }
 
 export interface FinishedSyncingRequest {
@@ -39,7 +39,7 @@ export interface FinishedSyncingRequest {
 export interface KeepInStandby {
   publicKey: string //pub key of the standby node
   cycleNumber: number //a recent cycle
-  sign?: Types.Signature //sig of standby node 
+  sign?: Types.Signature //sig of standby node
 }
 
 export interface Txs {
@@ -48,7 +48,7 @@ export interface Txs {
 
 export interface Record {
   syncing: number
-  joinedConsensors: JoinedConsensor[]
+  selectedConsensors: SelectedConsensor[]
 
   /** New nodes that others will add to their standby node lists once received. Optional for now until Join Protocol v2 is stabilized. */
   standbyAdd?: JoinRequest[]

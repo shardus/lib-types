@@ -1,4 +1,4 @@
-import { JoinedConsensor } from './JoinTypes'
+import { SelectedConsensor } from './JoinTypes'
 import { NodeStatus } from './P2PTypes'
 
 /** TYPES */
@@ -11,7 +11,7 @@ type RequiredExceptFor<T, TOptional extends keyof T> = Pick<
 > &
   Partial<T>
 
-export interface Node extends JoinedConsensor {
+export interface Node extends SelectedConsensor {
   curvePublicKey: string
   status: NodeStatus
 }

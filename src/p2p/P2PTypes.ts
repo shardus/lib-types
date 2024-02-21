@@ -26,6 +26,7 @@ export interface P2PNode {
   address: string
   joinRequestTimestamp: number
   activeTimestamp: number
+  selectedTimestamp: number
   syncingTimestamp: number
   readyTimestamp: number
   refreshedCounter?: number
