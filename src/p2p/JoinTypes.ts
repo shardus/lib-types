@@ -24,7 +24,7 @@ export interface JoinRequest {
   appJoinData?: any //Required for golden ticket feature
 }
 
-export interface SyncStarted {
+export interface StartedSyncingRequest {
   nodeId: string //pub key of the standby node
   cycleNumber: number //a recent cycle 
   sign?: Types.Signature //sig of standby node 
@@ -44,6 +44,9 @@ export interface KeepInStandby {
 
 export interface Txs {
   join: JoinRequest[]
+  startedSyncing: StartedSyncingRequest[]
+  finishedSyncing: FinishedSyncingRequest[]
+  standbyRefresh: KeepInStandby[]
 }
 
 export interface Record {
