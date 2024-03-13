@@ -12,6 +12,7 @@ export type SignedActiveRequest = ActiveRequest & Types.SignedObject;
 
 export interface Txs {
   active: SignedActiveRequest[];
+  finishedSyncing: SignedFinishedSyncingRequest[];
 }
 
 export interface Record {
@@ -21,3 +22,7 @@ export interface Record {
   activatedPublicKeys: string[];
   maxSyncTime: number;
 }
+
+export interface FinishedSyncingRequest extends ActiveRequest {}
+
+export type SignedFinishedSyncingRequest = FinishedSyncingRequest & Types.SignedObject;
