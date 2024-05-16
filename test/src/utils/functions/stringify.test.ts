@@ -211,6 +211,14 @@ describe('safeStringify', () => {
     )
   })
 
+  it('stringifies nested arrays of BigInt values', () => {
+    const nestedBigIntArray = [BigInt(123), [BigInt(456), [BigInt(789), BigInt(101112)]], BigInt(131415)]
+    let input = safeStringify({ nestedBigIntArray })
+    expect(input).toBe(
+      '{"nestedBigIntArray":[{"dataType":"bi","value":"7b"},[{"dataType":"bi","value":"1c8"},[{"dataType":"bi","value":"315"},{"dataType":"bi","value":"18af8"}]],{"dataType":"bi","value":"20157"}]}'
+    )
+  })
+
   it('stringifies buffers', () => {
     expect(safeStringify({ buff: Buffer.from('hello') })).toBe(
       '{"buff":{"value":"aGVsbG8=","dataType":"b64"}}'
@@ -291,5 +299,22 @@ describe('safeJsonParse', function () {
     const nestedJson = '{"a": {"b": {"c": [1, 2, {"d": "test"}]}}}'
     const nestedObject = { a: { b: { c: [1, 2, { d: 'test' }] } } }
     expect(safeJsonParse(nestedJson)).toEqual(nestedObject)
+  })
+
+  it('parses JSON with nested arrays of BigInt values', () => {
+    const nestedBigIntJson =
+      '{"nestedBigIntArray":[{"dataType":"bi","value":"7b"},[{"dataType":"bi","value":"1c8"},[{"dataType":"bi","value":"315"},{"dataType":"bi","value":"18af8"}]],{"dataType":"bi","value":"20157"}]}'
+    const nestedBigIntArray = [BigInt(123), [BigInt(456), [BigInt(789), BigInt(101112)]], BigInt(131415)]
+    expect(safeJsonParse(nestedBigIntJson)).toEqual({ nestedBigIntArray })
+  })
+
+  it('parses invalid JSON strings gracefully', () => {
+    const invalidJson = '{"a": 1, "b": "test"'
+    expect(() => safeJsonParse(invalidJson)).toThrow(SyntaxError)
+  })
+
+  it('throws an error for invalid JSON with unsupported structure', () => {
+    const invalidStructureJson = '{"foo": [1, 2, {"dataType": "bi", "value": "invalid"}]}'
+    expect(() => safeJsonParse(invalidStructureJson)).toThrowError()
   })
 })
