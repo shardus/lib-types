@@ -27,7 +27,8 @@ const isObject = (val: unknown): boolean => {
  * @param options - The options for stringify (optional).
  * @returns The string representation of the value.
  */
-export function safeStringify(val: unknown, options: stringifyOptions = defaultOptions): string | undefined {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+export function safeStringify(val: any, options: stringifyOptions = defaultOptions): string | undefined {
   const returnVal = stringifyHelper(val, false, options)
   if (returnVal !== undefined) {
     return '' + returnVal
@@ -47,7 +48,7 @@ export function safeJsonParse(value: string): unknown {
 }
 
 export interface stringifyOptions {
-  bufferEncoding: 'base64' | 'hex' | 'none'
+  bufferEncoding: 'base64' | 'none'
 }
 
 const defaultOptions: stringifyOptions = {
@@ -61,6 +62,10 @@ function isBufferValue(toStr: unknown, val: Record<string, unknown>): boolean {
     objKeys(val).includes('type') &&
     val['type'] === 'Buffer'
   )
+}
+
+function isUnit8Array(value: unknown): boolean {
+  return value instanceof Uint8Array
 }
 
 /**
@@ -84,6 +89,9 @@ function stringifyHelper(
   }
   if (val === false) {
     return 'false'
+  }
+  if (isUnit8Array(val)) {
+    val = Buffer.from(val)
   }
   switch (typeof val) {
     case 'object':
@@ -113,12 +121,7 @@ function stringifyHelper(
             case 'base64':
               return JSON.stringify({
                 value: Buffer.from(val['data']).toString('base64'),
-                dataType: 'bh',
-              })
-            case 'hex':
-              return JSON.stringify({
-                value: Buffer.from(val['data']).toString(),
-                dataType: 'bh',
+                dataType: 'b64',
               })
           }
         } else if (toStr === '[object Object]') {
@@ -162,10 +165,10 @@ function stringifyHelper(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getBufferFromField(input: any, encoding?: 'base64' | 'hex'): Buffer {
+function getBufferFromField(input: any, encoding?: 'base64'): Buffer {
   switch (encoding) {
     case 'base64':
-      return Buffer.from(input.data, 'base64')
+      return Buffer.from(input.value, 'base64')
     default:
       return Buffer.from(input)
   }
@@ -187,10 +190,14 @@ function typeReviver(key: string, value: any): any {
     Object.prototype.hasOwnProperty.call(originalObject, 'dataType') &&
     originalObject.dataType
   ) {
-    if (originalObject.dataType === 'bh') {
+    if (originalObject.dataType === 'b64') {
+      // buffers are converted to uint8arrays due to the existing behavior of JSON.parse
+      // Uint8Array is compatible with Buffer and it the expected type in the codebase post-parsing
       return new Uint8Array(getBufferFromField(originalObject, 'base64'))
     } else if (originalObject.dataType === 'bi') {
-      return BigInt('0x' + value)
+      return BigInt('0x' + originalObject.value)
+    } else {
+      return value
     }
   } else {
     return value

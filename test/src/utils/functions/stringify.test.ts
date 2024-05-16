@@ -1,4 +1,4 @@
-import { safeStringify } from '../../../../src/utils/functions/stringify'
+import { safeJsonParse, safeStringify } from '../../../../src/utils/functions/stringify'
 import stringify from 'fast-stable-stringify'
 
 class ImplementingToJSON {
@@ -213,7 +213,83 @@ describe('safeStringify', () => {
 
   it('stringifies buffers', () => {
     expect(safeStringify({ buff: Buffer.from('hello') })).toBe(
-      '{"buff":{"value":"aGVsbG8=","dataType":"bh"}}'
+      '{"buff":{"value":"aGVsbG8=","dataType":"b64"}}'
     )
+  })
+})
+
+describe('safeJsonParse', () => {
+  it.each([
+    [
+      'strings',
+      {
+        BACKSPACE: '\b',
+        CARRIAGE_RETURN: '\r',
+        EMPTY_STRING: '',
+        ESCAPE_RANGE: '\u0000\u001F',
+        FORM_FEED: '\f',
+        LINE_FEED: '\n',
+        LOWERCASE: 'abc',
+        MIXED: 'Aa1 Bb2 Cc3 \u0000\u001F\u0020\uFFFF☃"\\/\f\n\r\t\b',
+        NON_ESCAPE_RANGE: '\u0020\uFFFF',
+        NUMBER_ONLY: '123',
+        QUOTATION_MARK: '"',
+        REVERSE_SOLIDUS: '\\',
+        SOLIDUS: '/',
+        TAB: '\t',
+        UPPERCASE: 'ABC',
+        UTF16: '☃',
+        VALUES_WITH_SPACES: 'a b c',
+      },
+      ['simple object', { foo: 'bar' }],
+    ],
+  ])('matches the output of `parse`: %s (`%s`)', (_, value) => {
+    expect(safeJsonParse(safeStringify(value))).toStrictEqual(value)
+  })
+})
+
+describe('safeJsonParse', function () {
+  it.each([
+    ['simple object', '{"a": 1, "b": "test"}', { a: 1, b: 'test' }],
+    ['array of numbers', '[1, 2, 3]', [1, 2, 3]],
+    ['array of strings', '["a", "b", "c"]', ['a', 'b', 'c']],
+    ['boolean true', 'true', true],
+    ['boolean false', 'false', false],
+    ['null', 'null', null],
+    ['number', '123', 123],
+    ['string', '"test"', 'test'],
+    ['nested object', '{"a": {"b": {"c": "d"}}}', { a: { b: { c: 'd' } } }],
+    [
+      'nested array',
+      '[[1, 2], [3, 4]]',
+      [
+        [1, 2],
+        [3, 4],
+      ],
+    ],
+    ['date string', '"2023-05-16T09:00:00Z"', '2023-05-16T09:00:00Z'],
+    ['object with null', '{"a": null}', { a: null }],
+    ['object with BigInt', '{"dataType":"bi","value":"64"}', BigInt(100)],
+    ['object with Buffer', '{"value":"aGVsbG8=","dataType":"b64"}', Uint8Array.from(Buffer.from('hello'))],
+  ])('parses valid JSON string: %s', (_, value, expected) => {
+    expect(safeJsonParse(value)).toEqual(expected)
+  })
+
+  it('parses JSON string with Buffer and BigInt', () => {
+    const buffer = Buffer.from('hello')
+    const obj = {
+      buf: buffer,
+      bigint: BigInt(100),
+    }
+    expect(safeJsonParse(safeStringify(obj))).toEqual({
+      buf: Uint8Array.from(buffer),
+      bigint: BigInt(100),
+    })
+  })
+
+  it('parses JSON string with nested structures', () => {
+    const nestedJson = '{"a": {"b": {"c": [1, 2, {"d": "test"}]}}}'
+    const nestedObject = { a: { b: { c: [1, 2, { d: 'test' }] } } }
+    expect(safeJsonParse(nestedJson)).toEqual(nestedObject)
   })
 })
