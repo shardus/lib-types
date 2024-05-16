@@ -317,4 +317,19 @@ describe('safeJsonParse', function () {
     const invalidStructureJson = '{"foo": [1, 2, {"dataType": "bi", "value": "invalid"}]}'
     expect(() => safeJsonParse(invalidStructureJson)).toThrowError()
   })
+
+  it('complex nested object test', () => {
+    const nestedObject = { a: { b: { c: [1, 2, { d: 'test' }], e: { f: 'test' } } } }
+    expect(safeJsonParse(safeStringify(nestedObject))).toEqual(nestedObject)
+  })
+
+  it('buffer compatibility test with JSON.stringify', () => {
+    const buffer = Buffer.from('hello')
+    const obj = {
+      buf: buffer,
+    }
+    expect(safeJsonParse(JSON.stringify(obj))).toEqual({
+      buf: { type: 'Buffer', data: [104, 101, 108, 108, 111] },
+    })
+  })
 })

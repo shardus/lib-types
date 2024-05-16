@@ -28,12 +28,11 @@ const isObject = (val: unknown): boolean => {
  * @returns The string representation of the value.
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-export function safeStringify(val: any, options: stringifyOptions = defaultOptions): string | undefined {
+export function safeStringify(val: any, options: stringifyOptions = defaultOptions): string {
   const returnVal = stringifyHelper(val, false, options)
   if (returnVal !== undefined) {
     return '' + returnVal
   }
-  return undefined
 }
 
 /**
@@ -42,6 +41,7 @@ export function safeStringify(val: any, options: stringifyOptions = defaultOptio
  * @param value - The JSON string to parse.
  * @returns The parsed JSON object.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function safeJsonParse(value: string): any {
   return JSON.parse(value, typeReviver)
 }

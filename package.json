@@ -11,6 +11,7 @@
   "scripts": {
     "release": "np --any-branch --no-cleanup --no-tests --no-yarn",
     "test": "jest",
+    "coverage": "npm test -- --coverage",
     "lint": "eslint './src/**/*.ts'",
     "lint-windows": "eslint ./src/**/*.ts",
     "clean": "gts clean",
