@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
-
 const objToString = Object.prototype.toString;
+
 const objKeys =
   Object.keys ||
   function (obj): unknown[] {
@@ -11,11 +10,7 @@ const objKeys =
     return keys;
   };
 
-function isUnit8Array(value: unknown): boolean {
-  return value instanceof Uint8Array;
-}
-
-const isObject = (val: any): boolean => {
+const isObject = (val: unknown): boolean => {
   if (val === null) {
     return false;
   }
@@ -24,15 +19,45 @@ const isObject = (val: any): boolean => {
   }
   return typeof val === 'function' || typeof val === 'object';
 };
-interface StringifierOptions {
+
+/**
+ * Safely converts a value to a string representation.
+ *
+ * @param val - The value to be converted.
+ * @param options - The options for stringify (optional).
+ * @returns The string representation of the value.
+ */
+export function safeStringify(
+  val: unknown,
+  options: stringifyOptions = defaultOptions
+): string | undefined {
+  const returnVal = stringifyHelper(val, false, options);
+  if (returnVal !== undefined) {
+    return '' + returnVal;
+  }
+  return undefined;
+}
+
+/**
+ * Safely parses a JSON string into an object.
+ * If parsing fails, it returns an object with an error property.
+ *
+ * @param value - The JSON string to parse.
+ * @returns The parsed JSON object or an object with an error property.
+ */
+export function safeJsonParser(value: string): unknown {
+  return JSON.parse(value, typeReviver);
+}
+
+export interface stringifyOptions {
   bufferEncoding: 'base64' | 'hex' | 'none';
 }
 
-const defaultStringifierOptions: StringifierOptions = {
+const defaultOptions: stringifyOptions = {
   bufferEncoding: 'base64',
 };
 
-function isBufferValue(toStr: any, val: Record<string, unknown>): boolean {
+function isBufferValue(toStr: unknown, val: Record<string, unknown>): boolean {
   return (
     toStr === '[object Object]' &&
     objKeys(val).length === 2 &&
@@ -46,15 +71,16 @@ function isBufferValue(toStr: any, val: Record<string, unknown>): boolean {
  *
  * @param val - The value to be converted.
  * @param isArrayProp - Indicates whether the value is a property of an array.
- * @param options - The options for stringification (optional, default is `defaultStringifierOptions`).
+ * @param options - The options for stringify (optional, default is `defaultStringifierOptions`).
  * @returns The string representation of the value, or `null` or `undefined` if the value cannot be stringified.
  */
-function stringifier(
+function stringifyHelper(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   val: any,
   isArrayProp: boolean,
-  options: StringifierOptions = defaultStringifierOptions
+  options: stringifyOptions = defaultOptions
 ): string | null | undefined {
-  if (options === null) options = defaultStringifierOptions;
+  if (options === null) options = defaultOptions;
   let i, max, str, keys, key, propVal, toStr;
   if (val === true) {
     return 'true';
@@ -62,33 +88,27 @@ function stringifier(
   if (val === false) {
     return 'false';
   }
-  // not 100% this is correct, based on how buferes are printed later
-  if (isUnit8Array(val)) {
-    val = Buffer.from(val);
-  }
   switch (typeof val) {
     case 'object':
       if (val === null) {
         return null;
-      } else if (val.toJSON && typeof val.toJSON === 'function') {
-        return stringifier(val.toJSON(), isArrayProp, options);
+      } else if ('toJSON' in val && typeof val.toJSON === 'function') {
+        return stringifyHelper(val.toJSON(), isArrayProp, options);
       } else {
         toStr = objToString.call(val);
         if (toStr === '[object Array]') {
           str = '[';
-          max = val.length - 1;
+          max = (val as unknown[]).length - 1;
           for (i = 0; i < max; i++) {
-            str += stringifier(val[i], true, options) + ',';
+            str += stringifyHelper((val as unknown[])[i], true) + ',';
           }
           if (max > -1) {
-            str += stringifier(val[i], true, options);
+            str += stringifyHelper((val as unknown[])[i], true);
           }
           return str + ']';
-          //need to review the perf aspects of how we first detect that this is buffer by fully
-          //running toStr = objToString.call(val) above or is that a fast/goo way to handle things compared to typeof?
         } else if (
           options.bufferEncoding !== 'none' &&
-          isBufferValue(toStr, val)
+          isBufferValue(toStr, val as Record<string, unknown>)
         ) {
           switch (options.bufferEncoding) {
             case 'base64':
@@ -103,14 +123,17 @@ function stringifier(
               });
           }
         } else if (toStr === '[object Object]') {
-          // only object is left
           keys = objKeys(val).sort();
           max = keys.length;
           str = '';
           i = 0;
           while (i < max) {
             key = keys[i];
-            propVal = stringifier(val[key], false, options);
+            propVal = stringifyHelper(
+              (val as Record<typeof key, unknown>)[key],
+              false,
+              options
+            );
             if (propVal !== undefined) {
               if (str) {
                 str += ',';
@@ -133,31 +156,12 @@ function stringifier(
     case 'bigint':
       return JSON.stringify({dataType: 'bi', value: val.toString(16)});
     default:
-      return isFinite(val) ? val : null;
+      return isFinite(val as number) ? val : null;
   }
-}
-
-/**
- * Safely converts a value to a string representation.
- *
- * @param val - The value to be converted.
- * @param options - The options for stringification (optional).
- * @returns The string representation of the value.
- */
-export function safeStringify(
-  val: unknown,
-  options: StringifierOptions = defaultStringifierOptions
-): string {
-  const returnVal = stringifier(val, false, options);
-  console.log('Here is the return value', returnVal);
-  if (returnVal !== undefined) {
-    return '' + returnVal;
-  }
-  return '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function GetBufferFromField(input: any, encoding?: 'base64' | 'hex'): Buffer {
+function getBufferFromField(input: any, encoding?: 'base64' | 'hex'): Buffer {
   switch (encoding) {
     case 'base64':
       return Buffer.from(input.data, 'base64');
@@ -173,6 +177,7 @@ function GetBufferFromField(input: any, encoding?: 'base64' | 'hex'): Buffer {
  * @param value - The value of the current property being parsed.
  * @returns The revived value, or the original value if no revival is needed.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function typeReviver(key: string, value: any): any {
   if (key === 'sig') return value;
   const originalObject = value;
@@ -182,28 +187,12 @@ function typeReviver(key: string, value: any): any {
     originalObject.dataType
   ) {
     if (originalObject.dataType === 'bh') {
-      return new Uint8Array(GetBufferFromField(originalObject, 'base64'));
+      return new Uint8Array(getBufferFromField(originalObject, 'base64'));
     } else if (originalObject.dataType === 'bi') {
       // eslint-disable-next-line node/no-unsupported-features/es-builtins
       return BigInt('0x' + value);
     }
   } else {
     return value;
-  }
-}
-
-/**
- * Safely parses a JSON string into an object.
- * If parsing fails, it returns an object with an error property.
- *
- * @param value - The JSON string to parse.
- * @returns The parsed JSON object or an object with an error property.
- */
-export function safeJsonParser(value: string): any {
-  try {
-    return JSON.parse(value, typeReviver);
-  } catch (error) {
-    console.error('Json parsing failed: ', error);
-    return {error: 'cannot parse'};
   }
 }

@@ -21,6 +21,7 @@ import * as shardFunctionTypes_ from './state-manager/shardFunctionTypes'
 import * as StateManagerTypes_ from './state-manager/StateManagerTypes'
 import * as StateMetaDataTypes_ from './state-manager/StateMetaDataTypes'
 import * as ModesTypes_ from './p2p/ModesTypes'
+import * as Utils_ from './utils/functions/stringify';
 
 export type hexstring = string;
 export type publicKey = hexstring;
@@ -56,4 +57,10 @@ export namespace StateManager {
   export import shardFunctionTypes = shardFunctionTypes_
   export import StateManagerTypes = StateManagerTypes_
   export import StateMetaDataTypes = StateMetaDataTypes_
+}
+
+export namespace Utils {
+  export import safeStringify = Utils_.safeStringify;
+  export import safeParseJson = Utils_.safeJsonParser;
+  export import stringifyOptions = Utils_.stringifyOptions;
 }

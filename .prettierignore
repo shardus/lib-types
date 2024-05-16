@@ -1,1 +1,3 @@
-src/**/*.ts
+src/p2p/*.ts
+src/state-mamange/*.ts
+src/src/index.ts
