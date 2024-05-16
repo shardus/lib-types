@@ -38,10 +38,9 @@ export function safeStringify(val: any, options: stringifyOptions = defaultOptio
 
 /**
  * Safely parses a JSON string into an object.
- * If parsing fails, it returns an object with an error property.
  *
  * @param value - The JSON string to parse.
- * @returns The parsed JSON object or an object with an error property.
+ * @returns The parsed JSON object.
  */
 export function safeJsonParse(value: string): any {
   return JSON.parse(value, typeReviver)
