@@ -1,15 +1,16 @@
-import {safeStringify} from '../../../../src/utils/functions/stringify';
+import { safeStringify } from '../../../../src/utils/functions/stringify'
+import stringify from 'fast-stable-stringify'
 
 class ImplementingToJSON {
   toJSON(): string {
-    return 'dummy!';
+    return 'dummy!'
   }
 }
 
 class NotImplementingToJSON {}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
-const emptyFunction = () => {};
+const emptyFunction = () => {}
 
 describe('safeStringify', () => {
   it.each([
@@ -79,13 +80,10 @@ describe('safeStringify', () => {
     ['false', false],
     ['undefined', undefined],
     ['null', null],
-    [
-      'objects of undefineds',
-      {ONE: undefined, THREE: undefined, TWO: undefined},
-    ],
-    ['objects of null', {NULL: null}],
+    ['objects of undefineds', { ONE: undefined, THREE: undefined, TWO: undefined }],
+    ['objects of null', { NULL: null }],
     ['a Date instance', new Date('2017')],
-    ['a function', function () {}],
+    ['a function', emptyFunction],
     ['object that implements `toJSON`', new ImplementingToJSON()],
     ['objects that does not implements `toJSON`', new NotImplementingToJSON()],
     [
@@ -149,10 +147,7 @@ describe('safeStringify', () => {
     ['arrays of undefined', [undefined]],
     ['arrays of Date instances', [new Date('2017')]],
     ['arrays of instances that implement `toJSON`', [new ImplementingToJSON()]],
-    [
-      'arrays of instances that do not implement `toJSON`',
-      [new NotImplementingToJSON()],
-    ],
+    ['arrays of instances that do not implement `toJSON`', [new NotImplementingToJSON()]],
     ['arrays of functions', [emptyFunction]],
     [
       'arrays of mixed values',
@@ -199,23 +194,26 @@ describe('safeStringify', () => {
         new NotImplementingToJSON(),
       ],
     ],
-  ])(
-    'matches the output of `json-stable-stringify` when hashing %s (`%s`)',
-    (_, value) => {
-      expect(safeStringify(value)).toBe(JSON.stringify(value));
-    }
-  );
+  ])('matches the output of `fastStableStringify.stringify`: %s (`%s`)', (_, value) => {
+    expect(safeStringify(value)).toBe(stringify(value))
+  })
 
-  it('hashes bigints', () => {
-    expect(safeStringify(BigInt(200))).toBe('{"dataType":"bi","value":"c8"}');
-    expect(safeStringify({foo: BigInt(100), goo: '100n'})).toBe(
+  it('stringifies bigints', () => {
+    expect(safeStringify(BigInt(200))).toBe('{"dataType":"bi","value":"c8"}')
+    expect(safeStringify({ foo: BigInt(100), goo: '100n' })).toBe(
       '{"foo":{"dataType":"bi","value":"64"},"goo":"100n"}'
-    );
-    expect(safeStringify({age: BigInt(100), name: 'Hrushi'})).toBe(
-      '{"age":{"dataType":"bi","value":"64"},"name":"Hrushi"}'
-    );
-    expect(safeStringify({age: [BigInt(100), BigInt(200), BigInt(300)]})).toBe(
+    )
+    expect(safeStringify({ age: BigInt(100), name: 'dummy' })).toBe(
+      '{"age":{"dataType":"bi","value":"64"},"name":"dummy"}'
+    )
+    expect(safeStringify({ age: [BigInt(100), BigInt(200), BigInt(300)] })).toBe(
       '{"age":[{"dataType":"bi","value":"64"},{"dataType":"bi","value":"c8"},{"dataType":"bi","value":"12c"}]}'
-    );
-  });
-});
+    )
+  })
+
+  it('stringifies buffers', () => {
+    expect(safeStringify({ buff: Buffer.from('hello') })).toBe(
+      '{"buff":{"value":"aGVsbG8=","dataType":"bh"}}'
+    )
+  })
+})

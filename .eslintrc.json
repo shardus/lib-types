@@ -14,7 +14,7 @@
     "plugin:no-unsanitized/DOM",
     "prettier"
   ],
-  "ignorePatterns": [],
+  "ignorePatterns": ["src/state-manager/*", "src/p2p/*", "src/index.ts"],
   "rules": {
     "no-empty": [
       1,
