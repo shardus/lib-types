@@ -43,7 +43,7 @@ export function safeStringify(val: any, options: stringifyOptions = defaultOptio
  * @param value - The JSON string to parse.
  * @returns The parsed JSON object or an object with an error property.
  */
-export function safeJsonParse(value: string, typeReviver?: (key: any, value: any) => any): any {
+export function safeJsonParse(value: string): any {
   return JSON.parse(value, typeReviver)
 }
 
