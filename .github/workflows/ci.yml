@@ -1,0 +1,95 @@
+name: Typescript CI Workflow
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.16.1'
+
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          npm ci
+          echo "Dependency installation complete."
+
+      - name: Build
+        run: |
+          echo "Compiling the code..."
+          npm run compile
+          echo "Compile complete."
+
+      - name: Lint
+        run: |
+          echo "Running Linter..."
+          npm run lint
+          echo "Running Linter complete."
+
+      - name: Format check
+        run: |
+          echo "Running format check..."
+          npm run format-check
+          echo "Format check complete."
+
+      - name: Test apply patches
+        run: |
+          set -e
+          for patch in *.patch; do
+            if [ -f "$patch" ]; then
+              echo "Testing $patch"
+              git apply --check -v "$patch" || (echo "Failed to apply patch: $patch" && exit 1)
+            fi
+          done
+          echo "No patches to test or all patches applied successfully."
+
+  trigger-jenkins:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Branch Name
+        id: vars
+        run: |
+          # Determine the branch name
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+          else
+            echo "BRANCH_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+
+          # Determine the repository name, prioritize the secret if it exists
+          if [ -n "${{ vars.REPO_NAME }}" ]; then
+            REPO_NAME=${{ vars.REPO_NAME }}
+          else
+            REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
+          fi
+
+          # Capitalize the repository name
+          REPO_NAME_CAPITALIZED=$(echo "${REPO_NAME:0:1}" | tr '[:lower:]' '[:upper:]')${REPO_NAME:1}
+
+          # Export the environment variables
+          echo "REPO_NAME=${REPO_NAME_CAPITALIZED}" >> $GITHUB_ENV
+
+      - name: Trigger Jenkins Job
+        env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
+          REPO_NAME: ${{ env.REPO_NAME }}
+          JENKINS_URL: ${{ vars.JENKINS_URL }}
+          JENKINS_JOB_SMOKE: ${{ vars.JENKINS_JOB_SMOKE }}
+        run: |
+          curl -f -X POST "${JENKINS_URL}/job/${JENKINS_JOB_SMOKE}/buildWithParameters?SPECIFY_${REPO_NAME}_BRANCH=true&${REPO_NAME}_BRANCH=${BRANCH_NAME}" \
+            --user "${{ secrets.JENKINS_API_CREDS }}"
