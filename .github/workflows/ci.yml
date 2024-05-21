@@ -27,12 +27,6 @@ jobs:
           npm ci
           echo "Dependency installation complete."
 
-      - name: Build
-        run: |
-          echo "Compiling the code..."
-          npm run compile
-          echo "Compile complete."
-
       - name: Lint
         run: |
           echo "Running Linter..."
@@ -44,6 +38,18 @@ jobs:
           echo "Running format check..."
           npm run format-check
           echo "Format check complete."
+
+      - name: Build
+        run: |
+          echo "Compiling the code..."
+          npm run compile
+          echo "Compile complete."
+
+      - name: Unit Tests
+        run: |
+          echo "Running Unit Tests..."
+          npm test
+          echo "Unit Tests complete."
 
       - name: Test apply patches
         run: |
