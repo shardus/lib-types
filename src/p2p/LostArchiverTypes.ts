@@ -20,7 +20,7 @@ export interface ArchiverDownMsg {
 export interface ArchiverUpMsg {
   type: 'up';
   downMsg: ArchiverDownMsg;
-  refuteMsg: ArchiverRefutesLostMsg;
+  refuteMsg: SignedObject<ArchiverRefutesLostMsg>;
   cycle: CycleMarker;
 }
 

@@ -1,0 +1,63 @@
+name: Typescript CI Workflow
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.16.1'
+
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          npm ci
+          echo "Dependency installation complete."
+
+      - name: Lint
+        run: |
+          echo "Running Linter..."
+          npm run lint
+          echo "Running Linter complete."
+
+      - name: Format check
+        run: |
+          echo "Running format check..."
+          npm run format-check
+          echo "Format check complete."
+
+      - name: Build
+        run: |
+          echo "Compiling the code..."
+          npm run compile
+          echo "Compile complete."
+
+      #      - name: Unit Tests
+      #        run: |
+      #          echo "Running Unit Tests..."
+      #          npm test
+      #          echo "Unit Tests complete."
+
+      - name: Test apply patches
+        run: |
+          set -e
+          for patch in *.patch; do
+            if [ -f "$patch" ]; then
+              echo "Testing $patch"
+              git apply --check -v "$patch" || (echo "Failed to apply patch: $patch" && exit 1)
+            fi
+          done
+          echo "No patches to test or all patches applied successfully."
