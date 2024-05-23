@@ -10,19 +10,20 @@
   ],
   "scripts": {
     "release": "np --any-branch --no-cleanup --no-tests --no-yarn",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Info - No tests specified.\"",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
+    "build": "npm run compile",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "format-check": "prettier --check './src/**/*.ts'"
+    "format-check": "prettier --check \"./src/**/*.ts\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/shardus/shardus-types.git"
+    "url": "https://github.com/shardeum/lib-types.git"
   },
   "publishConfig": {
     "access": "public"
