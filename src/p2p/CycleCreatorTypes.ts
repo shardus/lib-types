@@ -67,7 +67,8 @@ export type CycleRecord = BaseRecord &
     archiverListHash: hexstring
     standbyNodeListHash: hexstring
   } &
-  LostArchivers.Record
+  LostArchivers.Record &
+  { random: number }
 
 export type CycleData = CycleRecord & {
   marker: CycleMarker
