@@ -1,6 +1,6 @@
 {
   "name": "@shardus/types",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "description": "",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
