@@ -42,11 +42,18 @@ export interface StandbyRefreshRequest {
   sign?: Types.Signature //sig of standby node 
 }
 
+export interface UnjoinRequest {
+  publicKey: string //pub key of the standby node
+}
+
+export type SignedUnjoinRequest = UnjoinRequest & Types.SignedObject
+
 export interface Txs {
-  join: JoinRequest[]
+  standbyAdd: JoinRequest[]
   startedSyncing: StartedSyncingRequest[]
   finishedSyncing: FinishedSyncingRequest[]
   standbyRefresh: StandbyRefreshRequest[]
+  standbyRemove: SignedUnjoinRequest[]
 }
 
 export interface Record {
