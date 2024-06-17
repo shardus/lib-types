@@ -44,15 +44,20 @@ export interface StandbyRefreshRequest {
 
 export interface UnjoinRequest {
   publicKey: string //pub key of the standby node
-  cycleNumber: number //a recent cycle
-  sign?: Types.Signature //sig of standby node 
+}
+
+export type SignedUnjoinRequest = UnjoinRequest & Types.SignedObject
+
+export interface lostAfterSelectionRequest {
+  nodeId: string //id of the synced node
 }
 export interface Txs {
   standbyAdd: JoinRequest[]
   startedSyncing: StartedSyncingRequest[]
   finishedSyncing: FinishedSyncingRequest[]
   standbyRefresh: StandbyRefreshRequest[]
-  standbyRemove: UnjoinRequest[]
+  standbyRemove: SignedUnjoinRequest[]
+  lostAfterSelection: lostAfterSelectionRequest[]
 }
 
 export interface Record {
