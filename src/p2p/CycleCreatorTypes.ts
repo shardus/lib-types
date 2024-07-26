@@ -12,6 +12,7 @@ import * as SafetyMode from './SafetyModeTypes'
 import * as Snapshot from './SnapshotTypes'
 import * as Modes from './ModesTypes'
 import * as LostArchivers from './LostArchiverTypes'
+import * as ServiceQueue from './ServiceQueueTypes'
 
 /** TYPES */
 
@@ -42,7 +43,8 @@ export type CycleTxs =
   Lost.Txs &
   Rotation.Txs &
   CycleAutoScale.Txs &
-  LostArchivers.Txs
+  LostArchivers.Txs &
+  ServiceQueue.Txs
 // don't forget to add new modules here
 
 export type CycleRecord = BaseRecord &
@@ -68,7 +70,8 @@ export type CycleRecord = BaseRecord &
     standbyNodeListHash: hexstring
   } &
   LostArchivers.Record &
-  { random: number }
+  { random: number } &
+  ServiceQueue.Record
 
 export type CycleData = CycleRecord & {
   marker: CycleMarker

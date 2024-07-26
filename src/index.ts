@@ -21,6 +21,7 @@ import * as shardFunctionTypes_ from './state-manager/shardFunctionTypes'
 import * as StateManagerTypes_ from './state-manager/StateManagerTypes'
 import * as StateMetaDataTypes_ from './state-manager/StateMetaDataTypes'
 import * as ModesTypes_ from './p2p/ModesTypes'
+import * as ServiceQueueTypes_ from './p2p/ServiceQueueTypes'
 import * as Utils_ from './utils/functions/stringify'
 
 export type hexstring = string
@@ -51,6 +52,7 @@ export namespace P2P {
   export import SyncTypes = SyncTypes_
   export import TemplateTypes = TemplateTypes_
   export import ModesTypes = ModesTypes_
+  export import ServiceQueueTypes = ServiceQueueTypes_
 }
 
 export namespace StateManager {
