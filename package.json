@@ -12,8 +12,7 @@
     "release": "np --any-branch --no-cleanup --no-tests --no-yarn",
     "test": "jest",
     "coverage": "npm test -- --coverage",
-    "lint": "eslint './src/**/*.ts'",
-    "lint-windows": "eslint ./src/**/*.ts",
+    "lint": "eslint \"./src/**/*.ts\"",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
@@ -21,7 +20,8 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "format-check": "prettier --check \"./src/**/*.ts\""
+    "format-check": "prettier --check \"./src/**/*.ts\"",
+    "format-fix": "prettier --write \"./src/**/*.ts\""
   },
   "repository": {
     "type": "git",
