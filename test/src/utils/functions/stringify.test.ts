@@ -332,4 +332,14 @@ describe('safeJsonParse', function () {
       buf: { type: 'Buffer', data: [104, 101, 108, 108, 111] },
     })
   })
+
+  it('throws an error for invalid base64 string in value field', () => {
+    const invalid = '{"value": {"length": 1_000_000_000}, "dataType": "bb"}'
+    expect(() => safeJsonParse(invalid)).toThrow(Error)
+  })
+
+  it('throws an error for invalid base64 string in value field test 2', () => {
+    const noValue = { dataType: 'u8ab', value: { length: 10000000 } }
+    expect(() => safeJsonParse(safeStringify(noValue))).toThrow(Error)
+  })
 })

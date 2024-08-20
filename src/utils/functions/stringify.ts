@@ -189,10 +189,13 @@ export function typeReviver(key: string, value: any): any {
     Object.prototype.hasOwnProperty.call(originalObject, 'dataType') &&
     originalObject.dataType
   ) {
-    if (originalObject.dataType === 'bb') {
-      return getBufferFromField(originalObject, 'base64')
-    } else if (originalObject.dataType === 'u8ab') {
-      return Uint8Array.from(Buffer.from(originalObject.value, 'base64'))
+    if (originalObject.dataType === 'bb' || originalObject.dataType === 'u8ab') {
+      if (typeof originalObject.value !== 'string') {
+        throw new Error('Invalid base64 string in value field')
+      }
+      return originalObject.dataType === 'bb'
+        ? getBufferFromField(originalObject, 'base64')
+        : Uint8Array.from(Buffer.from(originalObject.value, 'base64'))
     } else if (originalObject.dataType === 'bi') {
       return BigInt('0x' + originalObject.value)
     } else {
