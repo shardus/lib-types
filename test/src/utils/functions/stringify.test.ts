@@ -338,8 +338,8 @@ describe('safeJsonParse', function () {
     expect(() => safeJsonParse(invalid)).toThrow(Error)
   })
 
-  it('throws an error for invalid base64 string in value field test 2', () => {
+  it('returns the value as it is for invalid base64 string in value field test 2', () => {
     const noValue = { dataType: 'u8ab', value: { length: 10000000 } }
-    expect(() => safeJsonParse(safeStringify(noValue))).toThrow(Error)
+    expect(safeJsonParse(safeStringify(noValue))).toEqual(noValue)
   })
 })

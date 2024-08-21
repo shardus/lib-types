@@ -191,7 +191,7 @@ export function typeReviver(key: string, value: any): any {
   ) {
     if (originalObject.dataType === 'bb' || originalObject.dataType === 'u8ab') {
       if (typeof originalObject.value !== 'string') {
-        throw new Error('Invalid base64 string in value field')
+        return value
       }
       return originalObject.dataType === 'bb'
         ? getBufferFromField(originalObject, 'base64')
