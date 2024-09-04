@@ -26,8 +26,8 @@ export interface JoinRequest {
 
 export interface StartedSyncingRequest {
   nodeId: string //pub key of the standby node
-  cycleNumber: number //a recent cycle 
-  sign?: Types.Signature //sig of standby node 
+  cycleNumber: number //a recent cycle
+  sign?: Types.Signature //sig of standby node
 }
 
 export interface FinishedSyncingRequest {
@@ -39,11 +39,12 @@ export interface FinishedSyncingRequest {
 export interface StandbyRefreshRequest {
   publicKey: string //pub key of the standby node
   cycleNumber: number //a recent cycle
-  sign?: Types.Signature //sig of standby node 
+  sign?: Types.Signature //sig of standby node
 }
 
 export interface UnjoinRequest {
   publicKey: string //pub key of the standby node
+  cycleNumber: number //a recent cycle
 }
 
 export type SignedUnjoinRequest = UnjoinRequest & Types.SignedObject
