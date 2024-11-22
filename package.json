@@ -38,7 +38,7 @@
   },
   "homepage": "https://gitlab.com/shardus/shardus-types#readme",
   "devDependencies": {
-    "@types/node": "18.16.1",
+    "@types/node": "18.19.1",
     "np": "9.2.0",
     "prettier": "2.8.8",
     "typescript": "4.4.4",
