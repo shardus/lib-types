@@ -1,5 +1,5 @@
 {
-  "name": "@shardus/types",
+  "name": "@shardeum-foundation/lib-types",
   "version": "1.2.21",
   "description": "",
   "main": "build/src/index.js",
