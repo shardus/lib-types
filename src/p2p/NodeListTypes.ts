@@ -14,7 +14,7 @@ type RequiredExceptFor<T, TOptional extends keyof T> = Pick<
 export interface Node extends JoinedConsensor {
   curvePublicKey: string
   status: NodeStatus
-  refuteCycles?: Set<number>
+  refuteCycles?: number[]
 }
 
 export type Update = OptionalExceptFor<Node, 'id'>
