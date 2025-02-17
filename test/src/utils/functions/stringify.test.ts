@@ -295,6 +295,57 @@ describe('safeJsonParse', function () {
     })
   })
 
+  it('parses JSON string with Buffer and BigInt', () => {
+    const buffer = Buffer.from('hello')
+    const obj = {
+      buf: buffer,
+      bigint: BigInt(100),
+    }
+    expect(safeJsonParse(safeStringify(obj))).toEqual({
+      buf: buffer,
+      bigint: BigInt(100),
+    })
+  })
+
+  it('prevents overflow with object pretending to be Buffer', () => {
+    const maliciousObj = {
+      type: 'Buffer',
+      data: { length: 4294967295 }, // Simulating a huge object
+    }
+    expect(safeJsonParse(JSON.stringify(maliciousObj))).toEqual({
+      type: 'Buffer',
+      data: { length: 4294967295 },
+    });
+  })
+
+  it('prevents overflow with fake array-like object', () => {
+    const fakeArray = { 0: 'H', 1: 'i', length: 4294967295 }
+    expect(safeJsonParse(JSON.stringify(fakeArray))).toEqual({
+       0: 'H', 1: 'i', length: 4294967295
+    });
+  })
+
+  it('handles valid base64 buffer encoding safely', () => {
+    const originalBuffer = Buffer.from('test-data')
+    const encoded = safeStringify({ buf: originalBuffer })
+    const decoded = safeJsonParse(encoded)
+
+    expect(decoded.buf).toEqual(originalBuffer)
+  })
+
+  it('handles Uint8Array safely', () => {
+    const uint8 = new Uint8Array([72, 101, 108, 108, 111])
+    const obj = { uint8 }
+    expect(safeJsonParse(safeStringify(obj))).toEqual(obj)
+  })
+
+  it('prevents prototype pollution attack', () => {
+    const maliciousPayload = '{"__proto__":{"polluted":true}}'
+    const parsed = safeJsonParse(maliciousPayload)
+
+    expect(parsed.polluted).toBeUndefined()
+  })
+
   it('parses JSON string with nested structures', () => {
     const nestedJson = '{"a": {"b": {"c": [1, 2, {"d": "test"}]}}}'
     const nestedObject = { a: { b: { c: [1, 2, { d: 'test' }] } } }
