@@ -12,6 +12,7 @@ export interface JoinedConsensor extends Types.P2PNode {
   cycleJoined: CycleCreator.CycleMarker
   counterRefreshed: CycleCreator.CycleRecord['counter']
   id: string
+  foundationNode?: boolean
 }
 
 export interface JoinRequest {
