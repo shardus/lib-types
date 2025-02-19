@@ -312,7 +312,7 @@ describe('safeJsonParse', function () {
       type: 'Buffer',
       data: { length: 4294967295 }, // Simulating a huge object
     }
-    expect(safeJsonParse(JSON.stringify(maliciousObj))).toEqual({
+    expect(safeJsonParse(safeStringify(maliciousObj))).toEqual({
       type: 'Buffer',
       data: { length: 4294967295 },
     });
@@ -320,7 +320,7 @@ describe('safeJsonParse', function () {
 
   it('prevents overflow with fake array-like object', () => {
     const fakeArray = { 0: 'H', 1: 'i', length: 4294967295 }
-    expect(safeJsonParse(JSON.stringify(fakeArray))).toEqual({
+    expect(safeJsonParse(safeStringify(fakeArray))).toEqual({
        0: 'H', 1: 'i', length: 4294967295
     });
   })
