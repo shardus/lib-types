@@ -8,6 +8,7 @@ export interface SetGlobalTx {
   value: unknown
   when: number
   source: string
+  txId: string
 }
 
 export interface Receipt {
