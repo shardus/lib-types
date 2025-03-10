@@ -9,6 +9,7 @@ export interface SetGlobalTx {
   when: number
   source: string
   txId: string
+  afterStateHash: string
 }
 
 export interface Receipt {
