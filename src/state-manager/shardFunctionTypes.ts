@@ -1,4 +1,4 @@
-import { Node } from "../p2p/NodeListTypes"
+import { Node } from '../p2p/NodeListTypes'
 
 type ShardGlobals = {
   /**
@@ -272,7 +272,7 @@ interface BasicAddressRange {
 }
 
 type CycleShardData = {
-  shardGlobals: ShardGlobals 
+  shardGlobals: ShardGlobals
   cycleNumber: number
   ourNode: Node
   /**
@@ -309,4 +309,16 @@ type CycleShardData = {
   calculationTime: number
 }
 
-export { ShardGlobals, ShardInfo, WrappableParitionRange as WrappableParitionRange, NodeShardData, AddressRange, HomeNodeSummary, ParititionShardDataMap, NodeShardDataMap, MergeResults, BasicAddressRange, CycleShardData }
+export {
+  ShardGlobals,
+  ShardInfo,
+  WrappableParitionRange as WrappableParitionRange,
+  NodeShardData,
+  AddressRange,
+  HomeNodeSummary,
+  ParititionShardDataMap,
+  NodeShardDataMap,
+  MergeResults,
+  BasicAddressRange,
+  CycleShardData,
+}

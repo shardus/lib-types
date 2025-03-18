@@ -132,10 +132,7 @@ function stringifyHelper(
             value: Buffer.from(val).toString('base64'),
             dataType: 'u8ab',
           })
-        } else if (
-          options.bufferEncoding !== 'none' &&
-          isBufferValue(toStr, val as Record<string, unknown>)
-        ) {
+        } else if (options.bufferEncoding !== 'none' && isBufferValue(toStr, val as Record<string, unknown>)) {
           switch (options.bufferEncoding) {
             case 'base64':
               return JSON.stringify({

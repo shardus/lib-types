@@ -1,13 +1,6 @@
 import { CycleRecord as Cycle } from './CycleCreatorTypes'
 import { SignedObject } from './P2PTypes'
-import {
-  NamesToTypes,
-  StateMetaData,
-  TypeIndex,
-  TypeName,
-  TypeNames,
-  ValidTypes,
-} from './SnapshotTypes'
+import { NamesToTypes, StateMetaData, TypeIndex, TypeName, TypeNames, ValidTypes } from './SnapshotTypes'
 
 /** TYPES */
 
