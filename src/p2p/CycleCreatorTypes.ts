@@ -32,8 +32,7 @@ export interface BaseRecord {
 }
 // don't forget to add new modules here
 
-export type CycleTxs =
-  Modes.Txs &
+export type CycleTxs = Modes.Txs &
   SafetyMode.Txs &
   Refresh.Txs &
   Archivers.Txs &
@@ -68,10 +67,7 @@ export type CycleRecord = BaseRecord &
     nodeListHash: hexstring
     archiverListHash: hexstring
     standbyNodeListHash: hexstring
-  } &
-  LostArchivers.Record &
-  { random: number } &
-  ServiceQueue.Record
+  } & LostArchivers.Record & { random: number } & ServiceQueue.Record
 
 export type CycleData = CycleRecord & {
   marker: CycleMarker

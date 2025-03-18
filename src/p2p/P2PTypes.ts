@@ -55,21 +55,17 @@ export interface Route<T> {
   handler: T
 }
 
-export type InternalHandler<
-  Payload = unknown,
-  Response = unknown,
-  Sender = unknown
-> = (
+export type InternalHandler<Payload = unknown, Response = unknown, Sender = unknown> = (
   payload: Payload,
   respond: (response?: Response) => void,
   sender: Sender,
   tracker: string,
-  msgSize: number,
+  msgSize: number
 ) => void
 
 export type GossipHandler<Payload = unknown, Sender = unknown> = (
   payload: Payload,
   sender: Sender,
   tracker: string,
-  msgSize: number,
+  msgSize: number
 ) => void

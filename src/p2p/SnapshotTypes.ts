@@ -22,13 +22,9 @@ export interface NamesToTypes {
   STATE_METADATA: StateMetaData
 }
 
-export type TypeName<T extends ValidTypes> = T extends CycleRecord
-  ? TypeNames.CYCLE
-  : TypeNames.STATE_METADATA
+export type TypeName<T extends ValidTypes> = T extends CycleRecord ? TypeNames.CYCLE : TypeNames.STATE_METADATA
 
-export type TypeIndex<T extends ValidTypes> = T extends CycleRecord
-  ? CycleRecord['counter']
-  : StateMetaData['counter']
+export type TypeIndex<T extends ValidTypes> = T extends CycleRecord ? CycleRecord['counter'] : StateMetaData['counter']
 
 export interface NetworkHash {
   cycle: number
@@ -62,24 +58,12 @@ interface Account {
   accountId: string
   hash: string
 }
-export type PartitionRanges = Map<
-  shardFunctionTypes.AddressRange['partition'],
-  shardFunctionTypes.AddressRange
->
-type PartitionAccounts = Map<
-  shardFunctionTypes.AddressRange['partition'],
-  Account[]
->
+export type PartitionRanges = Map<shardFunctionTypes.AddressRange['partition'], shardFunctionTypes.AddressRange>
+type PartitionAccounts = Map<shardFunctionTypes.AddressRange['partition'], Account[]>
 
-export type PartitionHashes = Map<
-  shardFunctionTypes.AddressRange['partition'],
-  string
->
+export type PartitionHashes = Map<shardFunctionTypes.AddressRange['partition'], string>
 
-export type ReceiptMapHashes = Map<
-  shardFunctionTypes.AddressRange['partition'],
-  string
->
+export type ReceiptMapHashes = Map<shardFunctionTypes.AddressRange['partition'], string>
 
 export type NetworkStateHash = string
 export type NetworkReceiptHash = string

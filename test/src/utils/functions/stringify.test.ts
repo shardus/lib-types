@@ -200,9 +200,7 @@ describe('safeStringify', () => {
 
   it('stringifies bigints', () => {
     expect(safeStringify(BigInt(200))).toBe('{"dataType":"bi","value":"c8"}')
-    expect(safeStringify({ foo: BigInt(100), goo: '100n' })).toBe(
-      '{"foo":{"dataType":"bi","value":"64"},"goo":"100n"}'
-    )
+    expect(safeStringify({ foo: BigInt(100), goo: '100n' })).toBe('{"foo":{"dataType":"bi","value":"64"},"goo":"100n"}')
     expect(safeStringify({ age: BigInt(100), name: 'dummy' })).toBe(
       '{"age":{"dataType":"bi","value":"64"},"name":"dummy"}'
     )
@@ -220,9 +218,7 @@ describe('safeStringify', () => {
   })
 
   it('stringifies buffers', () => {
-    expect(safeStringify({ buff: Buffer.from('hello') })).toBe(
-      '{"buff":{"value":"aGVsbG8=","dataType":"bb"}}'
-    )
+    expect(safeStringify({ buff: Buffer.from('hello') })).toBe('{"buff":{"value":"aGVsbG8=","dataType":"bb"}}')
   })
 })
 
@@ -315,14 +311,16 @@ describe('safeJsonParse', function () {
     expect(safeJsonParse(safeStringify(maliciousObj))).toEqual({
       type: 'Buffer',
       data: { length: 4294967295 },
-    });
+    })
   })
 
   it('prevents overflow with fake array-like object', () => {
     const fakeArray = { 0: 'H', 1: 'i', length: 4294967295 }
     expect(safeJsonParse(safeStringify(fakeArray))).toEqual({
-       0: 'H', 1: 'i', length: 4294967295
-    });
+      0: 'H',
+      1: 'i',
+      length: 4294967295,
+    })
   })
 
   it('handles valid base64 buffer encoding safely', () => {

@@ -1,4 +1,4 @@
-import { SignedObject } from "./P2PTypes"
+import { SignedObject } from './P2PTypes'
 
 export interface Txs {
   txadd: AddNetworkTx[]
@@ -19,8 +19,8 @@ export interface RemoveNetworkTx {
   cycle: number // cycle the tx was added
 }
 
-export type SignedAddNetworkTx = AddNetworkTx & SignedObject;
-export type SignedRemoveNetworkTx = RemoveNetworkTx & SignedObject;
+export type SignedAddNetworkTx = AddNetworkTx & SignedObject
+export type SignedRemoveNetworkTx = RemoveNetworkTx & SignedObject
 
 export interface NetworkTxEntry {
   hash: string

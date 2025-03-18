@@ -1,3 +1,4 @@
-src/p2p/*.ts
-src/state-manager/*.ts
-src/index.ts
+build
+node_modules
+dist
+target
