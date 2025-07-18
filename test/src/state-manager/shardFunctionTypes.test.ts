@@ -703,21 +703,25 @@ describe('shardFunctionTypes', () => {
     })
 
     it('should handle large node arrays in NodeShardData', () => {
-      const largeNodeArray = Array(1000).fill(null).map((_, index) => createMockNode({
-        publicKey: `pubKey${index}`,
-        externalIp: `192.168.1.${index % 256}`,
-        externalPort: 8000 + index,
-        internalIp: `10.0.0.${index % 256}`,
-        internalPort: 9000 + index,
-        address: `address${index}`,
-        joinRequestTimestamp: 1234567890 + index,
-        activeTimestamp: 1234567900 + index,
-        syncingTimestamp: 1234567895 + index,
-        readyTimestamp: 1234567905 + index,
-        refreshedCounter: index,
-        activeCycle: index,
-        id: `nodeId${index}`,
-      }))
+      const largeNodeArray = Array(1000)
+        .fill(null)
+        .map((_, index) =>
+          createMockNode({
+            publicKey: `pubKey${index}`,
+            externalIp: `192.168.1.${index % 256}`,
+            externalPort: 8000 + index,
+            internalIp: `10.0.0.${index % 256}`,
+            internalPort: 9000 + index,
+            address: `address${index}`,
+            joinRequestTimestamp: 1234567890 + index,
+            activeTimestamp: 1234567900 + index,
+            syncingTimestamp: 1234567895 + index,
+            readyTimestamp: 1234567905 + index,
+            refreshedCounter: index,
+            activeCycle: index,
+            id: `nodeId${index}`,
+          })
+        )
 
       const nodeShardData: NodeShardData = {
         node: largeNodeArray[0],

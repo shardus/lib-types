@@ -192,7 +192,7 @@ describe('index.ts exports', () => {
     it('should export safeStringify function', () => {
       expect(LibTypes.Utils.safeStringify).toBeDefined()
       expect(typeof LibTypes.Utils.safeStringify).toBe('function')
-      
+
       // Test the function works
       const obj = { test: 'value', number: 123 }
       const result = LibTypes.Utils.safeStringify(obj)
@@ -203,7 +203,7 @@ describe('index.ts exports', () => {
     it('should export safeJsonParse function', () => {
       expect(LibTypes.Utils.safeJsonParse).toBeDefined()
       expect(typeof LibTypes.Utils.safeJsonParse).toBe('function')
-      
+
       // Test the function works
       const json = '{"test":"value","number":123}'
       const result = LibTypes.Utils.safeJsonParse(json)
@@ -218,7 +218,7 @@ describe('index.ts exports', () => {
     it('should export stringifyOptions type', () => {
       // Test that we can use the type
       const options: LibTypes.Utils.stringifyOptions = {
-        bufferEncoding: 'base64'
+        bufferEncoding: 'base64',
       }
       expect(options.bufferEncoding).toBe('base64')
     })
@@ -298,24 +298,40 @@ describe('index.ts exports', () => {
     it('should not have undefined exports', () => {
       // Check that all namespace exports are defined
       const p2pExports = [
-        'ActiveTypes', 'ApoptosisTypes', 'ArchiversTypes', 'CycleAutoScaleTypes',
-        'CycleChainTypes', 'CycleCreatorTypes', 'CycleParserTypes', 'GlobalAccountsTypes',
-        'JoinTypes', 'LostTypes', 'LostArchiverTypes', 'NodeListTypes', 'P2PTypes',
-        'RefreshTypes', 'RotationTypes', 'SafetyModeTypes', 'SnapshotTypes',
-        'SyncTypes', 'TemplateTypes', 'ModesTypes', 'ServiceQueueTypes'
+        'ActiveTypes',
+        'ApoptosisTypes',
+        'ArchiversTypes',
+        'CycleAutoScaleTypes',
+        'CycleChainTypes',
+        'CycleCreatorTypes',
+        'CycleParserTypes',
+        'GlobalAccountsTypes',
+        'JoinTypes',
+        'LostTypes',
+        'LostArchiverTypes',
+        'NodeListTypes',
+        'P2PTypes',
+        'RefreshTypes',
+        'RotationTypes',
+        'SafetyModeTypes',
+        'SnapshotTypes',
+        'SyncTypes',
+        'TemplateTypes',
+        'ModesTypes',
+        'ServiceQueueTypes',
       ]
 
-      p2pExports.forEach(exportName => {
+      p2pExports.forEach((exportName) => {
         expect(LibTypes.P2P[exportName]).toBeDefined()
       })
 
       const stateManagerExports = ['shardFunctionTypes', 'StateManagerTypes', 'StateMetaDataTypes']
-      stateManagerExports.forEach(exportName => {
+      stateManagerExports.forEach((exportName) => {
         expect(LibTypes.StateManager[exportName]).toBeDefined()
       })
 
       const utilsExports = ['safeStringify', 'safeJsonParse', 'typeReviver']
-      utilsExports.forEach(exportName => {
+      utilsExports.forEach((exportName) => {
         expect(LibTypes.Utils[exportName]).toBeDefined()
       })
     })
