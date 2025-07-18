@@ -699,25 +699,25 @@ describe('safeJsonParse', function () {
 
   it('documents unreachable code paths', () => {
     // This test documents code paths that are unreachable in the current implementation:
-    
+
     // 1. Lines 8-12: Object.keys fallback
     // This is a polyfill for very old browsers. Since Object.keys is defined at module
     // load time, it's impossible to test this in a modern test environment without
     // complex module loading manipulation that breaks Jest itself.
-    
+
     // 2. Lines 187-190: getBufferFromField without 'base64' encoding
     // The getBufferFromField function is only called from line 218 with 'base64' encoding,
     // making the else branches unreachable. To test these lines, getBufferFromField would
     // need to be exported or called with different parameters.
-    
+
     // 3. Line 222: return originalObject.value in u8ab branch
     // This line is in the u8ab dataType handler when isSafeForBuffer(originalObject.value)
     // returns false. However, if originalObject.value is a string (required by line 214),
     // isSafeForBuffer always returns true (line 72), making this branch unreachable.
-    
+
     // These represent defensive programming patterns that handle edge cases that may not
     // occur with the current code flow but could be relevant if the code evolves.
-    
+
     expect(true).toBe(true)
   })
 
@@ -728,16 +728,16 @@ describe('safeJsonParse', function () {
     // 1. encoding !== 'base64' (line 187)
     // 2. isSafeForBuffer(input) returns true (line 188)
     // 3. isSafeForBuffer(input) returns false (line 189-190)
-    
+
     // However, the function is only called from typeReviver with 'base64' encoding,
     // making these lines genuinely unreachable in the current implementation.
-    
+
     // The best we can do is test the actual behavior that IS reachable
     const base64Obj = {
       dataType: 'bb',
-      value: Buffer.from('test').toString('base64')
+      value: Buffer.from('test').toString('base64'),
     }
-    
+
     const result = safeJsonParse(JSON.stringify(base64Obj))
     expect(Buffer.isBuffer(result)).toBe(true)
     expect(result.toString()).toBe('test')
@@ -748,13 +748,13 @@ describe('safeJsonParse', function () {
     // This is in the u8ab branch when isSafeForBuffer returns false
     // But if value is a string, isSafeForBuffer always returns true
     // So this line is unreachable in practice
-    
+
     // Let's verify the actual reachable behavior
     const u8abString = {
       dataType: 'u8ab',
-      value: Buffer.from('test').toString('base64')
+      value: Buffer.from('test').toString('base64'),
     }
-    
+
     const result = safeJsonParse(JSON.stringify(u8abString))
     expect(result).toBeInstanceOf(Uint8Array)
     expect(Buffer.from(result).toString()).toBe('test')
