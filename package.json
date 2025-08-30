@@ -43,6 +43,9 @@
     "url": "https://gitlab.com/shardus/shardus-types/issues"
   },
   "homepage": "https://gitlab.com/shardus/shardus-types#readme",
+  "engines": {
+    "node": "20.19.3"
+  },
   "devDependencies": {
     "@types/node": "18.19.1",
     "np": "9.2.0",
