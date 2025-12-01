@@ -66,7 +66,7 @@ describe('CycleCreatorTypes', () => {
   describe('BaseRecord', () => {
     it('should have all required properties', () => {
       const baseRecord: BaseRecord = {
-        networkId: 'shardeum-betanet-1.x',
+        networkId: 'shardus-betanet-1.x',
         counter: 42,
         previous: 'previous-cycle-hash',
         start: 1234567890,
@@ -74,7 +74,7 @@ describe('CycleCreatorTypes', () => {
         networkConfigHash: 'config-hash-123',
       }
 
-      expect(baseRecord.networkId).toBe('shardeum-betanet-1.x')
+      expect(baseRecord.networkId).toBe('shardus-betanet-1.x')
       expect(baseRecord.counter).toBe(42)
       expect(baseRecord.previous).toBe('previous-cycle-hash')
       expect(baseRecord.start).toBe(1234567890)

@@ -11,7 +11,7 @@ You can use Shardus Types in your projects by either installing it as a dependen
 To install Shardus Types as a dependency, simply run:
 
 ```bash
-npm install @shardeum-foundation/lib-types
+npm install @shardus/lib-types
 ```
 
 ### Cloning and Linking
@@ -21,7 +21,7 @@ If you prefer to clone the repository and link it to your project, follow these 
 1. Clone and navigate into the cloned repository:
 
 ```bash
-git clone git@github.com:shardeum/lib-types.git
+git clone git@github.com:shardus/lib-types.git
 cd types
 ```
 
@@ -41,7 +41,7 @@ npm link
 Once installed or linked, you can import the Shardus type definitions in your TypeScript files:
 
 ```bash
-import { ShardusType } from '@shardeum-foundation/lib-types';
+import { ShardusType } from '@shardus/lib-types';
 ```
 
 ## Contributing

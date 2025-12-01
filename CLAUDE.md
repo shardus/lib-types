@@ -29,7 +29,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a pure TypeScript type definitions library for the Shardeum/Shardus ecosystem. It contains no runtime code - only type definitions that ensure type safety across multiple related projects.
+This is a pure TypeScript type definitions library for the Shardus/Shardus ecosystem. It contains no runtime code - only type definitions that ensure type safety across multiple related projects.
 
 ### Namespace Organization
 
@@ -72,11 +72,11 @@ Tests mirror the source structure in the `test/` directory. Each type module sho
 
 ### Publishing Workflow
 
-This package is published to npm under `@shardeum-foundation/lib-types`. The release process:
+This package is published to npm under `@shardus/lib-types`. The release process:
 1. Ensures all tests pass
 2. Compiles TypeScript
 3. Bumps version in package.json
 4. Creates git tag and pushes to repository
 5. Publishes to npm registry
 
-When making changes, ensure all type definitions maintain backward compatibility to avoid breaking dependent projects in the Shardeum ecosystem.
+When making changes, ensure all type definitions maintain backward compatibility to avoid breaking dependent projects in the Shardus ecosystem.
