@@ -1,6 +1,6 @@
 {
   "name": "@shardus/lib-types",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
