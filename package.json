@@ -40,11 +40,11 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/shardus/shardus-types/issues"
+    "url": "https://github.com/shardus/lib-types/issues"
   },
-  "homepage": "https://gitlab.com/shardus/shardus-types#readme",
+  "homepage": "https://github.com/shardus/lib-types#readme",
   "engines": {
-    "node": "20.19.3"
+    "node": "^24.0.0"
   },
   "devDependencies": {
     "@types/node": "18.19.1",
